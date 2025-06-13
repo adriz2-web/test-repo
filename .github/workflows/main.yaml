@@ -1,19 +1,26 @@
-on: push
-name: 🚀 Deploy website on push
-jobs:
-  web-deploy:
-    name: 🎉 Deploy
-    runs-on: self-hosted
-    steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v4
+name: 🚀 Deploy website via FTP
 
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-      with:
-        server: 127.0.0.1
-        username: test1
-        password: test1
-        protocol: ftps
-        port: 21
-	server-dir: /test1
+on:
+  push:
+    branches:
+      - main  # ou la branche que tu veux surveiller
+
+jobs:
+  ftp-deploy:
+    name: 📂 FTP Deploy
+    runs-on: self-hosted  # ou 'ubuntu-latest' si tu n'utilises pas un runner local
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 📤 Deploy to FTP server
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: 127.0.0.1
+          username: test1
+          password: test1
+          protocol: ftps
+          port: 21
+          server-dir: /  # adapte ce chemin si nécessaire
+          local-dir: ./  # ou ./dist, ./build, etc. selon ton projet
