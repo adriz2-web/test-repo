@@ -16,3 +16,4 @@ jobs:
         password: test1
         protocol: ftps
         port: 21
+	server-dir: /test1
