@@ -18,7 +18,7 @@ jobs:
         run: |
           try {
             Write-Host "Mapping network drive..."
-            net use Z: "\\kamino.azurinfo.fr\webs\test xcopy" /user:${{ secrets.SMB_USER }} ${{ secrets.SMB_PASS }}
+            net use Z: "\\kamino.azurinfo.fr\webs\test xcopy" /user:$env:SMB_USER $env:SMB_PASS
 
             Write-Host "Copying files..."
             xcopy "C:\Users\utilisateur\Documents\test xcopy\*" "Z:\" /E /Y /I
