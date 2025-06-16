@@ -1,21 +1,19 @@
-
 name: Deploy via SMB
 
 on:
-  push:
-    branches:
-      - main
+  push:
+    branches:
+      - main
 
 jobs:
-  deploy:
-    runs-on: windows-latest
+  deploy:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Map network drive and copy files
-        run: |
-          net use Z: "\\kamino.azurinfo.fr\webs\test xcopy" /user:${{ secrets.SMB_USER }} ${{ secrets.SMB_PASS }}
-          xcopy "C:\Users\utilisateur\Documents\test xcopy\*" "Z:\" /E /Y
-          net use Z: /delete /y
+      - name: Map network drive and copy files
+        run: |
+          net use Z: "\\kamino.azurinfo.fr\webs\test xcopy" /user:${{ secrets.SMB_USER }} ${{ secrets.SMB_PASS }}
+          xcopy "C:\Users\utilisateur\Documents\test xcopy\*" "Z:\" /E /Y
+          net use Z: /delete /y
