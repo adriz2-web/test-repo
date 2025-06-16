@@ -8,12 +8,28 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Map network drive and copy files
+        shell: powershell
         run: |
-          net use Z: "\\kamino.azurinfo.fr\webs\test xcopy" /user:${{ secrets.SMB_USER }} ${{ secrets.SMB_PASS }}
-          xcopy "C:\Users\utilisateur\Documents\test xcopy\*" "Z:\" /E /Y
-          net use Z: /delete /y
+          try {
+            Write-Host "Mapping network drive..."
+            net use Z: "\\kamino.azurinfo.fr\webs\test xcopy" /user:${{ secrets.SMB_USER }} ${{ secrets.SMB_PASS }}
+
+            Write-Host "Copying files..."
+            xcopy "C:\Users\utilisateur\Documents\test xcopy\*" "Z:\" /E /Y /I
+
+            Write-Host "Deployment completed successfully."
+          }
+          catch {
+            Write-Error "An error occurred during deployment: $_"
+            exit 1
+          }
+          finally {
+            Write-Host "Cleaning up network drive..."
+            net use Z: /delete /y
+          }
