@@ -8,6 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
+    environment: production
 
     steps:
       - name: Checkout code
@@ -15,6 +16,9 @@ jobs:
 
       - name: Map network drive and copy files
         shell: powershell
+        env:
+          SMB_USER: ${{ secrets.SMB_USER }}
+          SMB_PASS: ${{ secrets.SMB_PASS }}
         run: |
           try {
             Write-Host "Mapping network drive..."
