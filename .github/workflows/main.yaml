@@ -24,14 +24,3 @@ jobs:
           port: 21
           server-dir: /test1/  # adapte ce chemin si nécessaire
           local-dir: ./test1/  # ou ./dist, ./build, etc. selon ton projet
-
-      - name: 📤 Deploy to FTP server
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: 127.0.0.1
-          username: test1
-          password: test1
-          protocol: ftps
-          port: 21
-          server-dir: /test1/test2/  # adapte ce chemin si nécessaire
-          local-dir: ./test1/voila/  # ou ./dist, ./build, etc. selon ton projet
