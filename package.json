@@ -1,0 +1,22 @@
+{
+  "name": "test-repo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adriz2-web/test-repo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adriz2-web/test-repo/issues"
+  },
+  "homepage": "https://github.com/adriz2-web/test-repo#readme",
+  "description": "",
+  "devDependencies": {
+    "jest": "^30.0.0"
+  }
+}
