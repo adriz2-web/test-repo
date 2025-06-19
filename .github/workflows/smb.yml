@@ -34,6 +34,7 @@ jobs:
     needs: test
     runs-on: self-hosted
     environment: production
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
 
     steps:
       - name: Checkout code
@@ -44,10 +45,16 @@ jobs:
         env:
           SMB_USER: ${{ secrets.SMB_USER }}
           SMB_PASS: ${{ secrets.SMB_PASS }}
+          TARGET_ENV: ${{ github.event.inputs.target_env || 'blue' }}
         run: |
           try {
+            $targetPath = if ($env:TARGET_ENV -eq 'green') {
+              "\\kamino.azurinfo.fr\webs\test xcopy\green"
+            } else {
+              "\\kamino.azurinfo.fr\webs\test xcopy\blue"
+            }
             Write-Host "Mapping network drive..."
-            net use Z: "\\kamino.azurinfo.fr\webs\test xcopy" /user:$env:SMB_USER $env:SMB_PASS
+            net use Z: $targetPath /user:$env:SMB_USER $env:SMB_PASS
 
             Write-Host "Copying files..."
             xcopy "C:\Users\utilisateur\Documents\test xcopy\*" "Z:\" /E /Y /I
